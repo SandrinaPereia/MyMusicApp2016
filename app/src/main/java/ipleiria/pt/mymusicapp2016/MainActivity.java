@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<String> musicas;
+    private ArrayList<String> musics;
     private MediaPlayer mediaPlayer;
 
 
@@ -40,22 +41,22 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("appMusics", 0);
         Set<String> musicsSet = sp.getStringSet("musicsKey", new HashSet<String>());
 
-        musicas = new ArrayList<String>(musicsSet);
-        Collections.sort(musicas);
+        musics = new ArrayList<String>(musicsSet);
+        Collections.sort(musics);
 
-//        musicas.add("Ana Moura - Moura \n• 2015 - 4 stars •");
-//        musicas.add("António Variações - Anjo da Guarda \n• 1988 - 5 stars •");
-//        musicas.add("Deolinda - Mundo Pequenino \n• 2013 - 3 stars •");
-//        musicas.add("FF - Estou Aqui \n• 2006 - 4 stars •");
-//        musicas.add("Jorge Palma - Voo Nocturno \n• 1980 - 4 stars •");
-//        musicas.add("Pedro Abrunhosa - Luz \n• 2007 - 5 stars •");
-//        musicas.add("Rui Veloso - Ar de Rock \n• 1980 - 3 stars •");
-//        musicas.add("Tiago Bettencourt - Do Princípio \n• Universal Music Argentina 2014 - 3 stars •");
+//        musics.add("Ana Moura - Moura \n• 2015 - 4 stars •");
+//        musics.add("António Variações - Anjo da Guarda \n• 1988 - 5 stars •");
+//        musics.add("Deolinda - Mundo Pequenino \n• 2013 - 3 stars •");
+//        musics.add("FF - Estou Aqui \n• 2006 - 4 stars •");
+//        musics.add("Jorge Palma - Voo Nocturno \n• 1980 - 4 stars •");
+//        musics.add("Pedro Abrunhosa - Luz \n• 2007 - 5 stars •");
+//        musics.add("Rui Veloso - Ar de Rock \n• 1980 - 3 stars •");
+//        musics.add("Tiago Bettencourt - Do Princípio \n• Universal Music Argentina 2014 - 3 stars •");
 
         //Código da ListViews
         //Mudar o imagem da aplicação
-        SimpleAdapter adapter = createSimpleAdapter(musicas);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, musicas);
+        SimpleAdapter adapter = createSimpleAdapter(musics);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, musics);
 
         ListView listView = (ListView) findViewById(R.id.listView_musics);
         listView.setAdapter(adapter);
@@ -78,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
 
                 //atualizar a lista sem o contacto
-                musicas.remove(position);
+                musics.remove(position);
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
-                        android.R.layout.simple_list_item_1, musicas);
+                        android.R.layout.simple_list_item_1, musics);
                 ListView listView = (ListView) findViewById(R.id.listView_musics);
                 listView.setAdapter(adapter);
             }
@@ -112,21 +113,21 @@ public class MainActivity extends AppCompatActivity {
 
         if (termo.equals("")) { // a editText está vazia?
             // mostro todos as informações.
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, musicas);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, musics);
             lv.setAdapter(adapter);
 
-            Toast.makeText(MainActivity.this, "Showing all musicas.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Showing all musics.", Toast.LENGTH_SHORT).show();
         } else { // a editText não está vazia
 
             if (selectedItem.equals("All")) {
-                for (String c : musicas) { // para cada c em musicas
+                for (String c : musics) { // para cada c em musics
                     if (c.contains(termo)) { // se o c contiver o termo
                         searchMusics.add(c); //adicionar o c à lista searchContacts.
                     }
                 }
             } else if (selectedItem.equals("Artist")) {
                 // pesquisa pelo artista
-                for (String c : musicas) {
+                for (String c : musics) {
                     String[] split = c.split("\\-");
                     String artist = split[0];
                     artist = artist.trim();
@@ -137,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             } else if (selectedItem.equals("Album")) {
                 // pesquisa pelo album
-                for (String c : musicas) {
+                for (String c : musics) {
                     String[] split = c.split("\\-");
                     String album = split[1];
                     album = album.trim();
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }else if (selectedItem.equals("Editora")) {
                 // pesquisa pela idade
-                for (String c : musicas) {
+                for (String c : musics) {
                     String[] split = c.split("\\•");
                     String year = split[1];
                     year = year.trim();
@@ -159,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }else if (selectedItem.equals("Year")) {
                 // pesquisa pela idade
-                for (String c : musicas) {
+                for (String c : musics) {
                     String[] split = c.split("\\-");
                     String year = split[2];
                     year = year.trim();
@@ -170,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }else if (selectedItem.equals("Stars")) {
                 // pesquisa pelas estrelas
-                for (String c : musicas) {
+                for (String c : musics) {
                     String[] split = c.split("\\-");
                     String stars = split[3];
                     stars = stars.trim();
@@ -193,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
             } else { // lista de resultados está vazia.
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                        android.R.layout.simple_list_item_1, musicas);
+                        android.R.layout.simple_list_item_1, musics);
                 lv.setAdapter(adapter);
 
                 Toast.makeText(MainActivity.this, "No results found.", Toast.LENGTH_SHORT).show();
@@ -233,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         // Guardar as coisas em memória
 
         // Mete os contactos num conjunto porque ele é uma lista e isso daria problemas ao putStringSet
-        HashSet musicsSets = new HashSet(musicas);
+        HashSet musicsSets = new HashSet(musics);
 
         //Colocar o conjunto e criar uma chave que nos lembremos
         edit.putStringSet("musicsKey", musicsSets);
@@ -293,10 +294,10 @@ public class MainActivity extends AppCompatActivity {
                 // adicionar o novo album.
                 // anti-bugs
                 if (!artist.isEmpty() && !music.isEmpty() && !editor.isEmpty() && !year.isEmpty()) {
-                    musicas.add(newMusic);
+                    musics.add(newMusic);
                     Toast.makeText(MainActivity.this, "Created", Toast.LENGTH_SHORT).show();
                 //}else if (!artist.isEmpty() || !music.isEmpty() || !editor.isEmpty() || !year.isEmpty()) {
-                  //  musicas.add(newMusic);
+                  //  musics.add(newMusic);
                     //Toast.makeText(MainActivity.this, "Created", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(MainActivity.this, "No Created", Toast.LENGTH_SHORT).show();
@@ -306,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
                 ListView lv = (ListView) findViewById(R.id.listView_musics);
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
-                        android.R.layout.simple_list_item_1, musicas);
+                        android.R.layout.simple_list_item_1, musics);
 
                 lv.setAdapter(adapter);
 
