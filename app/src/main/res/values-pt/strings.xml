@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Minha aplicação de música</string>
+    <string name="Search">Procurar</string>
+    <string name="Options">Opções</string>
+    <string name="Exit">Sair</string>
+    <string name="text_search">Encontar</string>
+    <string name="Album">Album</string>
+    <string name="Botton_Add_Album">Adicionar Album</string>
+    <string name="Ok">Certo</string>
+    <string name="Cancel">Cancelar</string>
+    <string name="Canceled">Cancelado</string>
+    <string name="Artist">Artista</string>
+    <string name="All">Tudo</string>
+    <string name="Editor">Editora</string>
+    <string name="Year">Ano</string>
+    <string name="Stars">Estrelas</string>
+</resources>

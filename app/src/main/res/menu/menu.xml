@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="pt.ipleiria.text.MainActivity">
+    <item
+        android:id="@+id/action_pt"
+        android:orderInCategory="200"
+        android:title="Português"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_En"
+        android:orderInCategory="200"
+        android:title="English"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="200"
+        android:title="@string/Options"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_exit"
+        android:orderInCategory="200"
+        android:title="@string/Exit"
+        app:showAsAction="never" />
+</menu>
