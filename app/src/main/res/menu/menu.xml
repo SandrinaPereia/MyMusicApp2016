@@ -4,16 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="pt.ipleiria.text.MainActivity">
     <item
-        android:id="@+id/action_pt"
-        android:orderInCategory="200"
-        android:title="Português"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_En"
-        android:orderInCategory="200"
-        android:title="English"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/action_settings"
         android:orderInCategory="200"
         android:title="@string/Options"
