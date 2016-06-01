@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // código que é executado quando se clica num item da lista.
                 // não é preciso saber ao promenor aquilo que este código faz, até pq é complexo.
-                Toast.makeText(MainActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.Deleted, Toast.LENGTH_SHORT).show();
 
                 //atualizar a lista sem o contacto
                 musics.remove(position);
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, musics);
             lv.setAdapter(adapter);
 
-            Toast.makeText(MainActivity.this, "Showing all musics.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.Toast1, Toast.LENGTH_SHORT).show();
         } else { // a editText não está vazia
 
             if (selectedItem.equals("All")) {
@@ -190,14 +190,14 @@ public class MainActivity extends AppCompatActivity {
                         android.R.layout.simple_list_item_1, searchMusics);
                 lv.setAdapter(adapter);
 
-                Toast.makeText(MainActivity.this, "Results found.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.Toast2, Toast.LENGTH_SHORT).show();
             } else { // lista de resultados está vazia.
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                         android.R.layout.simple_list_item_1, musics);
                 lv.setAdapter(adapter);
 
-                Toast.makeText(MainActivity.this, "No results found.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.Toast3, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setView(inflater.inflate(R.layout.music_add, null));
         // Add the buttons
         // Adicionar dois botões, um positivo e outro negativo
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
                 // Obter referência para as editTexts
@@ -295,12 +295,12 @@ public class MainActivity extends AppCompatActivity {
                 // anti-bugs
                 if (!artist.isEmpty() && !music.isEmpty() && !editor.isEmpty() && !year.isEmpty()) {
                     musics.add(newMusic);
-                    Toast.makeText(MainActivity.this, "Created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.Created, Toast.LENGTH_SHORT).show();
                 //}else if (!artist.isEmpty() || !music.isEmpty() || !editor.isEmpty() || !year.isEmpty()) {
                   //  musics.add(newMusic);
                     //Toast.makeText(MainActivity.this, "Created", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this, "No Created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.No_Created, Toast.LENGTH_SHORT).show();
                 }
 
                 // dizer à listView para se actualizar
@@ -314,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(MainActivity.this, "Confirmed", Toast.LENGTH_SHORT).show();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 mediaPlayer = MediaPlayer.create(MainActivity.this,R.raw.teclado);
                 mediaPlayer.setLooping(true);
@@ -323,12 +323,12 @@ public class MainActivity extends AppCompatActivity {
                     mediaPlayer.setLooping(false);
                 }
                 // User cancelled the dialog
-                Toast.makeText(MainActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.Canceled, Toast.LENGTH_SHORT).show();
             }
         });
 
         // Set other dialog properties
-        builder.setTitle("Add Album");
+        builder.setTitle(R.string.Title_Album);
 
         // Create the AlertDialog
         AlertDialog dialog = builder.create();

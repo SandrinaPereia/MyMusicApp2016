@@ -9,28 +9,28 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/editText_artist"
-        android:hint="Artist" />
+        android:hint="@string/Text_Artist" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/editText_album"
-        android:hint="Album"
+        android:hint="@string/Text_Album"
         android:inputType="textPersonName" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/editText_editor"
-        android:hint="Editor"
+        android:hint="@string/Text_Editor"
         android:inputType="textPersonName" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/editText_year"
-        android:hint="Year"
+        android:hint="@string/Text_Year"
         android:inputType="phone" />
 
     <RatingBar

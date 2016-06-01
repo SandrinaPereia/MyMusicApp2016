@@ -15,4 +15,15 @@
     <string name="Editor">Editor</string>
     <string name="Stars">Stars</string>
     <string name="Year">Year</string>
+    <string name="Title_Album">Add Album</string>
+    <string name="Created">Created</string>
+    <string name="No_Created">No Created</string>
+    <string name="Text_Album">Album</string>
+    <string name="Text_Artist">Artist</string>
+    <string name="Text_Editor">Editor</string>
+    <string name="Text_Year">Year</string>
+    <string name="Deleted">Deleted</string>
+    <string name="Toast1">Showing all musics</string>
+    <string name="Toast2">Results found</string>
+    <string name="Toast3">No results found</string>
 </resources>
