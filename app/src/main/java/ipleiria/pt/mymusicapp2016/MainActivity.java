@@ -42,15 +42,15 @@ public class MainActivity extends AppCompatActivity {
         //define a mensagem
         builder.setMessage("Tem certeza que quer eliminar este albuns?");
         //define um botão como positivo
-        builder.setPositiveButton("sim ", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("OK ", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(MainActivity.this, "positivo=" + arg1, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Album mantido", Toast.LENGTH_SHORT).show();
             }
         });
         //define um botão como negativo.
-        builder.setNegativeButton("não", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(MainActivity.this, "negativo=" + arg1, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Cancelar", Toast.LENGTH_SHORT).show();
             }
         });
         //cria o AlertDialog
@@ -96,12 +96,9 @@ public class MainActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapters);
 
-
-
-        //Apagar contactos
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 exemplo_simples();
                 // código que é executado quando se clica num item da lista.
                 // não é preciso saber ao promenor aquilo que este código faz, até pq é complexo.
@@ -114,13 +111,11 @@ public class MainActivity extends AppCompatActivity {
                         android.R.layout.simple_list_item_1, musics);
                 ListView listView = (ListView) findViewById(R.id.listView_musics);
                 listView.setAdapter(adapter);
-
-
+                return false;
             }
         });
 
-
-
+        //Apagar contactos
 
     }
 
@@ -330,8 +325,8 @@ public class MainActivity extends AppCompatActivity {
                 if (!artist.isEmpty() && !music.isEmpty() && !editor.isEmpty() && !year.isEmpty()) {
                     musics.add(newMusic);
                     Toast.makeText(MainActivity.this, "Created", Toast.LENGTH_SHORT).show();
-                //}else if (!artist.isEmpty() || !music.isEmpty() || !editor.isEmpty() || !year.isEmpty()) {
-                  //  musics.add(newMusic);
+                    //}else if (!artist.isEmpty() || !music.isEmpty() || !editor.isEmpty() || !year.isEmpty()) {
+                    //  musics.add(newMusic);
                     //Toast.makeText(MainActivity.this, "Created", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(MainActivity.this, "No Created", Toast.LENGTH_SHORT).show();
