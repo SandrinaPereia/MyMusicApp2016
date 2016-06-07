@@ -5,7 +5,7 @@
     <string name="Options">Opções</string>
     <string name="Exit">Sair</string>
     <string name="text_search">Encontar</string>
-    <string name="Album">Album</string>
+    <string name="Album">Álbum</string>
     <string name="Botton_Add_Album">Adicionar Album</string>
     <string name="Ok">Ok</string>
     <string name="Cancel">Cancelar</string>
@@ -26,4 +26,10 @@
     <string name="Toast1">Mostrando todas as músicas</string>
     <string name="Toast2">Resultados encontrados</string>
     <string name="Toast3">Sem resultados encontrados</string>
+    <string name="Editor_Main">Editora</string>
+    <string name="Album_Main">Álbum</string>
+    <string name="All_Main">Tudo</string>
+    <string name="Artist_Main">Artista</string>
+    <string name="Year_Main">Ano</string>
+    <string name="Stars_Main">Estrelas</string>
 </resources>

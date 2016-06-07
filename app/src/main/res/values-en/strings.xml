@@ -26,4 +26,10 @@
     <string name="Toast1">Showing all musics</string>
     <string name="Toast2">Results found</string>
     <string name="Toast3">No results found</string>
+    <string name="Editor_Main">Editor</string>
+    <string name="Album_Main">Album</string>
+    <string name="All_Main">All</string>
+    <string name="Artist_Main">Artist</string>
+    <string name="Year_Main">Year</string>
+    <string name="Stars_Main">Stars</string>
 </resources>

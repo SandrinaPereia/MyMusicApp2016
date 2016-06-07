@@ -31,6 +31,12 @@ android:orientation="vertical">
         android:onClick="onClick_search" />
 </LinearLayout>
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView_musics"
+        android:layout_weight="1" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,11 +45,6 @@ android:orientation="vertical">
         android:onClick="onClick_add"
         android:layout_gravity="left" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView_musics"
-        android:layout_weight="1" />
 </LinearLayout>
 
 

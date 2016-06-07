@@ -70,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(adapters);
 
         //Apagar contactos
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
                 // código que é executado quando se clica num item da lista.
                 // não é preciso saber ao promenor aquilo que este código faz, até pq é complexo.
@@ -81,10 +81,10 @@ public class MainActivity extends AppCompatActivity {
                 //atualizar a lista sem o contacto
                 musics.remove(position);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
-                        android.R.layout.simple_list_item_1, musics);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, musics);
                 ListView listView = (ListView) findViewById(R.id.listView_musics);
                 listView.setAdapter(adapter);
+                return true;
             }
         });
 
@@ -119,13 +119,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, R.string.Toast1, Toast.LENGTH_SHORT).show();
         } else { // a editText não está vazia
 
-            if (selectedItem.equals("All")) {
+            if (selectedItem.equals(getString(R.string.All_Main))) {
                 for (String c : musics) { // para cada c em musics
                     if (c.contains(termo)) { // se o c contiver o termo
                         searchMusics.add(c); //adicionar o c à lista searchContacts.
                     }
                 }
-            } else if (selectedItem.equals("Artist")) {
+            } else if (selectedItem.equals(getString(R.string.Artist_Main))) {
                 // pesquisa pelo artista
                 for (String c : musics) {
                     String[] split = c.split("\\-");
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                         searchMusics.add(c);
                     }
                 }
-            } else if (selectedItem.equals("Album")) {
+            } else if (selectedItem.equals(getString(R.string.Album_Main))) {
                 // pesquisa pelo album
                 for (String c : musics) {
                     String[] split = c.split("\\-");
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                         searchMusics.add(c);
                     }
                 }
-            }else if (selectedItem.equals("Editora")) {
+            }else if (selectedItem.equals(getString(R.string.Editor_Main))) {
                 // pesquisa pela idade
                 for (String c : musics) {
                     String[] split = c.split("\\•");
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                         searchMusics.add(c);
                     }
                 }
-            }else if (selectedItem.equals("Year")) {
+            }else if (selectedItem.equals(getString(R.string.Year_Main))) {
                 // pesquisa pela idade
                 for (String c : musics) {
                     String[] split = c.split("\\-");
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                         searchMusics.add(c);
                     }
                 }
-            }else if (selectedItem.equals("Stars")) {
+            }else if (selectedItem.equals(getString(R.string.Stars_Main))) {
                 // pesquisa pelas estrelas
                 for (String c : musics) {
                     String[] split = c.split("\\-");
