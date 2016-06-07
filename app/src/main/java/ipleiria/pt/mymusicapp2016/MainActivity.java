@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     //atributo da classe.
     private AlertDialog alerta;
 
-    private void exemplo_simples() {
+    private void exemplo_simples(final int position) {
         //Cria o gerador do AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //define o titulo
@@ -42,15 +42,27 @@ public class MainActivity extends AppCompatActivity {
         //define a mensagem
         builder.setMessage("Tem certeza que quer eliminar este albuns?");
         //define um botão como positivo
+
         builder.setPositiveButton("OK ", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(MainActivity.this, "Album mantido", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Album apagado", Toast.LENGTH_SHORT).show();
+
+                musics.remove(position);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+                        android.R.layout.simple_list_item_1, musics);
+                ListView listView = (ListView) findViewById(R.id.listView_musics);
+                listView.setAdapter(adapter);
+
             }
+
         });
+
         //define um botão como negativo.
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(MainActivity.this, "Cancelar", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(MainActivity.this, "Album mantido", Toast.LENGTH_SHORT).show();
             }
         });
         //cria o AlertDialog
@@ -99,19 +111,12 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                exemplo_simples();
+                exemplo_simples(position);
                 // código que é executado quando se clica num item da lista.
                 // não é preciso saber ao promenor aquilo que este código faz, até pq é complexo.
-                Toast.makeText(MainActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
 
+                return true;
                 //atualizar a lista sem o contacto
-                musics.remove(position);
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
-                        android.R.layout.simple_list_item_1, musics);
-                ListView listView = (ListView) findViewById(R.id.listView_musics);
-                listView.setAdapter(adapter);
-                return false;
             }
         });
 
