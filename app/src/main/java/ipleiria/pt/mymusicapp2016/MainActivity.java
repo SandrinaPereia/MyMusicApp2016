@@ -31,6 +31,33 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<String> musics;
     private MediaPlayer mediaPlayer;
+    //atributo da classe.
+    private AlertDialog alerta;
+
+    private void exemplo_simples() {
+        //Cria o gerador do AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //define o titulo
+        builder.setTitle("Atenção");
+        //define a mensagem
+        builder.setMessage("Tem certeza que quer eliminar este albuns?");
+        //define um botão como positivo
+        builder.setPositiveButton("sim ", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                Toast.makeText(MainActivity.this, "positivo=" + arg1, Toast.LENGTH_SHORT).show();
+            }
+        });
+        //define um botão como negativo.
+        builder.setNegativeButton("não", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                Toast.makeText(MainActivity.this, "negativo=" + arg1, Toast.LENGTH_SHORT).show();
+            }
+        });
+        //cria o AlertDialog
+        alerta = builder.create();
+        //Exibe
+        alerta.show();
+    }
 
 
     @Override
@@ -69,24 +96,31 @@ public class MainActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapters);
 
-        //Apagar contactos
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
+
+        //Apagar contactos
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                exemplo_simples();
                 // código que é executado quando se clica num item da lista.
                 // não é preciso saber ao promenor aquilo que este código faz, até pq é complexo.
-                Toast.makeText(MainActivity.this, R.string.Deleted, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
 
                 //atualizar a lista sem o contacto
                 musics.remove(position);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, musics);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+                        android.R.layout.simple_list_item_1, musics);
                 ListView listView = (ListView) findViewById(R.id.listView_musics);
                 listView.setAdapter(adapter);
-                return true;
+
+
             }
         });
+
+
+
 
     }
 
@@ -116,16 +150,16 @@ public class MainActivity extends AppCompatActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, musics);
             lv.setAdapter(adapter);
 
-            Toast.makeText(MainActivity.this, R.string.Toast1, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Showing all musics.", Toast.LENGTH_SHORT).show();
         } else { // a editText não está vazia
 
-            if (selectedItem.equals(getString(R.string.All_Main))) {
+            if (selectedItem.equals("All")) {
                 for (String c : musics) { // para cada c em musics
                     if (c.contains(termo)) { // se o c contiver o termo
                         searchMusics.add(c); //adicionar o c à lista searchContacts.
                     }
                 }
-            } else if (selectedItem.equals(getString(R.string.Artist_Main))) {
+            } else if (selectedItem.equals("Artist")) {
                 // pesquisa pelo artista
                 for (String c : musics) {
                     String[] split = c.split("\\-");
@@ -136,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                         searchMusics.add(c);
                     }
                 }
-            } else if (selectedItem.equals(getString(R.string.Album_Main))) {
+            } else if (selectedItem.equals("Album")) {
                 // pesquisa pelo album
                 for (String c : musics) {
                     String[] split = c.split("\\-");
@@ -147,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                         searchMusics.add(c);
                     }
                 }
-            }else if (selectedItem.equals(getString(R.string.Editor_Main))) {
+            }else if (selectedItem.equals("Editora")) {
                 // pesquisa pela idade
                 for (String c : musics) {
                     String[] split = c.split("\\•");
@@ -158,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                         searchMusics.add(c);
                     }
                 }
-            }else if (selectedItem.equals(getString(R.string.Year_Main))) {
+            }else if (selectedItem.equals("Year")) {
                 // pesquisa pela idade
                 for (String c : musics) {
                     String[] split = c.split("\\-");
@@ -169,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                         searchMusics.add(c);
                     }
                 }
-            }else if (selectedItem.equals(getString(R.string.Stars_Main))) {
+            }else if (selectedItem.equals("Stars")) {
                 // pesquisa pelas estrelas
                 for (String c : musics) {
                     String[] split = c.split("\\-");
@@ -190,14 +224,14 @@ public class MainActivity extends AppCompatActivity {
                         android.R.layout.simple_list_item_1, searchMusics);
                 lv.setAdapter(adapter);
 
-                Toast.makeText(MainActivity.this, R.string.Toast2, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Results found.", Toast.LENGTH_SHORT).show();
             } else { // lista de resultados está vazia.
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                         android.R.layout.simple_list_item_1, musics);
                 lv.setAdapter(adapter);
 
-                Toast.makeText(MainActivity.this, R.string.Toast3, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "No results found.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -260,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setView(inflater.inflate(R.layout.music_add, null));
         // Add the buttons
         // Adicionar dois botões, um positivo e outro negativo
-        builder.setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
                 // Obter referência para as editTexts
@@ -295,12 +329,12 @@ public class MainActivity extends AppCompatActivity {
                 // anti-bugs
                 if (!artist.isEmpty() && !music.isEmpty() && !editor.isEmpty() && !year.isEmpty()) {
                     musics.add(newMusic);
-                    Toast.makeText(MainActivity.this, R.string.Created, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Created", Toast.LENGTH_SHORT).show();
                 //}else if (!artist.isEmpty() || !music.isEmpty() || !editor.isEmpty() || !year.isEmpty()) {
                   //  musics.add(newMusic);
                     //Toast.makeText(MainActivity.this, "Created", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this, R.string.No_Created, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "No Created", Toast.LENGTH_SHORT).show();
                 }
 
                 // dizer à listView para se actualizar
@@ -314,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(MainActivity.this, "Confirmed", Toast.LENGTH_SHORT).show();
             }
         });
-        builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 mediaPlayer = MediaPlayer.create(MainActivity.this,R.raw.teclado);
                 mediaPlayer.setLooping(true);
@@ -323,12 +357,12 @@ public class MainActivity extends AppCompatActivity {
                     mediaPlayer.setLooping(false);
                 }
                 // User cancelled the dialog
-                Toast.makeText(MainActivity.this, R.string.Canceled, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
             }
         });
 
         // Set other dialog properties
-        builder.setTitle(R.string.Title_Album);
+        builder.setTitle("Add Album");
 
         // Create the AlertDialog
         AlertDialog dialog = builder.create();
