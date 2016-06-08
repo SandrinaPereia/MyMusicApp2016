@@ -38,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
         //Cria o gerador do AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //define o titulo
-        builder.setTitle("Atenção");
+        builder.setTitle(R.string.Delete_album);
         //define a mensagem
-        builder.setMessage("Tem certeza que quer eliminar este albuns?");
+        builder.setMessage(R.string.Aviso_Delete);
         //define um botão como positivo
 
-        builder.setPositiveButton("OK ", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.Ok_Aviso_Delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(MainActivity.this, "Album apagado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.Toast_deleted, Toast.LENGTH_SHORT).show();
 
                 musics.remove(position);
 
@@ -59,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //define um botão como negativo.
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.Cancel_Aviso_Delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
 
-                Toast.makeText(MainActivity.this, "Album mantido", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.Toast_Canceled, Toast.LENGTH_SHORT).show();
             }
         });
         //cria o AlertDialog
@@ -150,16 +150,16 @@ public class MainActivity extends AppCompatActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, musics);
             lv.setAdapter(adapter);
 
-            Toast.makeText(MainActivity.this, "Showing all musics.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.Toast1, Toast.LENGTH_SHORT).show();
         } else { // a editText não está vazia
 
-            if (selectedItem.equals("All")) {
+            if (selectedItem.equals(getString(R.string.All_main))) {
                 for (String c : musics) { // para cada c em musics
                     if (c.contains(termo)) { // se o c contiver o termo
                         searchMusics.add(c); //adicionar o c à lista searchContacts.
                     }
                 }
-            } else if (selectedItem.equals("Artist")) {
+            } else if (selectedItem.equals(getString(R.string.Artist_main))) {
                 // pesquisa pelo artista
                 for (String c : musics) {
                     String[] split = c.split("\\-");
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                         searchMusics.add(c);
                     }
                 }
-            } else if (selectedItem.equals("Album")) {
+            } else if (selectedItem.equals(getString(R.string.Album_main))) {
                 // pesquisa pelo album
                 for (String c : musics) {
                     String[] split = c.split("\\-");
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                         searchMusics.add(c);
                     }
                 }
-            }else if (selectedItem.equals("Editora")) {
+            }else if (selectedItem.equals(getString(R.string.Editor_main))) {
                 // pesquisa pela idade
                 for (String c : musics) {
                     String[] split = c.split("\\•");
@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                         searchMusics.add(c);
                     }
                 }
-            }else if (selectedItem.equals("Year")) {
+            }else if (selectedItem.equals(getString(R.string.Year_main))) {
                 // pesquisa pela idade
                 for (String c : musics) {
                     String[] split = c.split("\\-");
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                         searchMusics.add(c);
                     }
                 }
-            }else if (selectedItem.equals("Stars")) {
+            }else if (selectedItem.equals(getString(R.string.Stars_main))) {
                 // pesquisa pelas estrelas
                 for (String c : musics) {
                     String[] split = c.split("\\-");
@@ -224,14 +224,14 @@ public class MainActivity extends AppCompatActivity {
                         android.R.layout.simple_list_item_1, searchMusics);
                 lv.setAdapter(adapter);
 
-                Toast.makeText(MainActivity.this, "Results found.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.Toast2, Toast.LENGTH_SHORT).show();
             } else { // lista de resultados está vazia.
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                         android.R.layout.simple_list_item_1, musics);
                 lv.setAdapter(adapter);
 
-                Toast.makeText(MainActivity.this, "No results found.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.Toast3, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setView(inflater.inflate(R.layout.music_add, null));
         // Add the buttons
         // Adicionar dois botões, um positivo e outro negativo
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.Ok_button, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
                 // Obter referência para as editTexts
@@ -329,12 +329,12 @@ public class MainActivity extends AppCompatActivity {
                 // anti-bugs
                 if (!artist.isEmpty() && !music.isEmpty() && !editor.isEmpty() && !year.isEmpty()) {
                     musics.add(newMusic);
-                    Toast.makeText(MainActivity.this, "Created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.Toast_Created, Toast.LENGTH_SHORT).show();
                     //}else if (!artist.isEmpty() || !music.isEmpty() || !editor.isEmpty() || !year.isEmpty()) {
                     //  musics.add(newMusic);
                     //Toast.makeText(MainActivity.this, "Created", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this, "No Created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.Toast_No_Created, Toast.LENGTH_SHORT).show();
                 }
 
                 // dizer à listView para se actualizar
@@ -348,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(MainActivity.this, "Confirmed", Toast.LENGTH_SHORT).show();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.Button_Cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 mediaPlayer = MediaPlayer.create(MainActivity.this,R.raw.teclado);
                 mediaPlayer.setLooping(true);
@@ -357,12 +357,12 @@ public class MainActivity extends AppCompatActivity {
                     mediaPlayer.setLooping(false);
                 }
                 // User cancelled the dialog
-                Toast.makeText(MainActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.Toast_Cancel, Toast.LENGTH_SHORT).show();
             }
         });
 
         // Set other dialog properties
-        builder.setTitle("Add Album");
+        builder.setTitle(R.string.Add_Album_title);
 
         // Create the AlertDialog
         AlertDialog dialog = builder.create();
