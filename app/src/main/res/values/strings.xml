@@ -41,10 +41,9 @@
         <item>@string/Year</item>
         <item>@string/Stars</item>
     </string-array>
-    <string name="Cancel"></string>
     <string name="Ok_button">Ok</string>
-    <string name="Toast_Created">Created</string>
-    <string name="Toast_No_Created">No Created</string>
+    <string name="Toast_Created">Added</string>
+    <string name="Toast_No_Created">Blank fields</string>
     <string name="Button_Cancel">Cancel</string>
     <string name="Toast_Cancel">Canceled</string>
     <string name="Add_Album_title">Add Album</string>

@@ -45,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
         builder.setPositiveButton(R.string.Ok_Aviso_Delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
+                mediaPlayer = MediaPlayer.create(MainActivity.this,R.raw.teclado);
+                mediaPlayer.setLooping(true);
+                mediaPlayer.start();
+                if(mediaPlayer.isPlaying()){
+                    mediaPlayer.setLooping(false);
+                }
                 Toast.makeText(MainActivity.this, R.string.Toast_deleted, Toast.LENGTH_SHORT).show();
 
                 musics.remove(position);
@@ -61,6 +67,12 @@ public class MainActivity extends AppCompatActivity {
         //define um botão como negativo.
         builder.setNegativeButton(R.string.Cancel_Aviso_Delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
+                mediaPlayer = MediaPlayer.create(MainActivity.this,R.raw.teclado);
+                mediaPlayer.setLooping(true);
+                mediaPlayer.start();
+                if(mediaPlayer.isPlaying()){
+                    mediaPlayer.setLooping(false);
+                }
 
                 Toast.makeText(MainActivity.this, R.string.Toast_Canceled, Toast.LENGTH_SHORT).show();
             }
@@ -94,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Código da ListViews
         //Mudar o imagem da aplicação
-        SimpleAdapter adapter = createSimpleAdapter(musics);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, musics);
+        //SimpleAdapter adapter = createSimpleAdapter(musics);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, musics);
 
         ListView listView = (ListView) findViewById(R.id.listView_musics);
         listView.setAdapter(adapter);
@@ -112,6 +124,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 exemplo_simples(position);
+                mediaPlayer = MediaPlayer.create(MainActivity.this,R.raw.teclado);
+                mediaPlayer.setLooping(true);
+                mediaPlayer.start();
+                if(mediaPlayer.isPlaying()){
+                    mediaPlayer.setLooping(false);
+                }
                 // código que é executado quando se clica num item da lista.
                 // não é preciso saber ao promenor aquilo que este código faz, até pq é complexo.
 
@@ -162,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (selectedItem.equals(getString(R.string.Artist_main))) {
                 // pesquisa pelo artista
                 for (String c : musics) {
-                    String[] split = c.split("\\-");
+                    String[] split = c.split("\\•");
                     String artist = split[0];
                     artist = artist.trim();
 
@@ -173,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (selectedItem.equals(getString(R.string.Album_main))) {
                 // pesquisa pelo album
                 for (String c : musics) {
-                    String[] split = c.split("\\-");
+                    String[] split = c.split("\\•");
                     String album = split[1];
                     album = album.trim();
 
@@ -185,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 // pesquisa pela idade
                 for (String c : musics) {
                     String[] split = c.split("\\•");
-                    String year = split[1];
+                    String year = split[2];
                     year = year.trim();
 
                     if (year.contains(termo)) {
@@ -195,9 +213,10 @@ public class MainActivity extends AppCompatActivity {
             }else if (selectedItem.equals(getString(R.string.Year_main))) {
                 // pesquisa pela idade
                 for (String c : musics) {
-                    String[] split = c.split("\\-");
-                    String year = split[2];
+                    String[] split = c.split("\\•");
+                    String year = split[3];
                     year = year.trim();
+
 
                     if (year.contains(termo)) {
                         searchMusics.add(c);
@@ -206,8 +225,8 @@ public class MainActivity extends AppCompatActivity {
             }else if (selectedItem.equals(getString(R.string.Stars_main))) {
                 // pesquisa pelas estrelas
                 for (String c : musics) {
-                    String[] split = c.split("\\-");
-                    String stars = split[3];
+                    String[] split = c.split("\\•");
+                    String stars = split[4];
                     stars = stars.trim();
 
                     if (stars.contains(termo)) {
@@ -237,24 +256,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Mudar o imagem da aplicação
-    private SimpleAdapter createSimpleAdapter(ArrayList<String> musics) {
-        List<HashMap<String, String>> simpleAdapterData = new ArrayList<HashMap<String, String>>();
-
-        for (String c : musics) {
-            HashMap<String, String> hashMap = new HashMap<>();
-
-            String[] split = c.split(" \\| ");
-
-            hashMap.put("artist", split[0]);
-
-            simpleAdapterData.add(hashMap);
-        }
-
-        String[] from = {"artist"};
-        int[] to = {R.id.textView_artist};
-        SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), simpleAdapterData, R.layout.listview_item, from, to);
-        return simpleAdapter;
-    }
+//    private SimpleAdapter createSimpleAdapter(ArrayList<String> musics) {
+//        List<HashMap<String, String>> simpleAdapterData = new ArrayList<HashMap<String, String>>();
+//
+//        for (String c : musics) {
+//            HashMap<String, String> hashMap = new HashMap<>();
+//
+//            String[] split = c.split(" \\• ");
+//
+//            hashMap.put("artist", split[0]);
+//
+//            simpleAdapterData.add(hashMap);
+//        }
+//
+//        String[] from = {"artist"};
+//        int[] to = {R.id.textView_artist};
+//        SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), simpleAdapterData, R.layout.listview_item, from, to);
+//        return simpleAdapter;
+//    }
     @Override
     protected void onStop() {
         super.onStop();
@@ -323,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
                 int rating = (int)star.getRating();
 
                 // Criar um novo album.
-                String newMusic = artist + " - " + music + "\n• " + editor + " - " + year + " - " + rating + " stars" + " •\n";
+                String newMusic = artist + " • " + music + "\n• " + editor + " • " + year + " • " + rating + " stars" + " •\n";
 
                 // adicionar o novo album.
                 // anti-bugs
