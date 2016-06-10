@@ -43,8 +43,9 @@
     </string-array>
     <string name="Ok_button">Ok</string>
     <string name="Toast_Created">Added</string>
-    <string name="Toast_No_Created">Blank fields</string>
+    <string name="Toast_No_Created">Empty fields</string>
     <string name="Button_Cancel">Cancel</string>
     <string name="Toast_Cancel">Canceled</string>
     <string name="Add_Album_title">Add Album</string>
+    <string name="Cancel"></string>
 </resources>

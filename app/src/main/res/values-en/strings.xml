@@ -40,5 +40,5 @@
     <string name="Ok_button">Ok</string>
     <string name="Toast_Cancel">Canceled</string>
     <string name="Toast_Created">Added</string>
-    <string name="Toast_No_Created">Blank fields</string>
+    <string name="Toast_No_Created">Empty fields</string>
 </resources>

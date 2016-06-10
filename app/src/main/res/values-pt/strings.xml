@@ -6,15 +6,15 @@
     <string name="Exit">Sair</string>
     <string name="text_search">Encontar</string>
     <string name="Album">Álbum</string>
-    <string name="Botton_Add_Album">Adicionar Album</string>
+    <string name="Botton_Add_Album">Adicionar Álbum</string>
     <string name="Ok">Ok</string>
     <string name="Artist">Artista</string>
     <string name="All">Tudo</string>
     <string name="Editor">Editora</string>
     <string name="Year">Ano</string>
     <string name="Stars">Estrelas</string>
-    <string name="Title_Album">Adicionar Album</string>
-    <string name="Text_Album">Album</string>
+    <string name="Title_Album">Adicionar Álbum</string>
+    <string name="Text_Album">Álbum</string>
     <string name="Text_Artist">Artista</string>
     <string name="Text_Editor">Editora</string>
     <string name="Text_Year">Ano</string>
@@ -39,5 +39,5 @@
     <string name="Ok_button">Ok</string>
     <string name="Toast_Cancel">Cancelado</string>
     <string name="Toast_Created">Adicionado</string>
-    <string name="Toast_No_Created">Campos em branco</string>
+    <string name="Toast_No_Created">Campos vazios</string>
 </resources>

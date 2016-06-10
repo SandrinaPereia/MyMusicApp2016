@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<String> musics;
     private MediaPlayer mediaPlayer;
-//    private ArrayList<String> link_music;
+    private ArrayList<String> link_music;
     //atributo da classe.
     private AlertDialog alerta;
 
@@ -108,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
 //        musics.add("Rui Veloso - Ar de Rock \n• 1980 - 3 stars •");
 //        musics.add("Tiago Bettencourt - Do Princípio \n• Universal Music Argentina 2014 - 3 stars •");
 
-
-
         //Código da ListViews
         //Mudar o imagem da aplicação
 
@@ -119,22 +117,22 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.listView_musics);
         listView.setAdapter(adapter);
 
-//        link_music = new ArrayList<String>();
-//
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String video = link_music.get(position);
-//
-//                try {
-//                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(video)));
-//
-//
-//                } catch (Exception e) {
-//                    Toast.makeText(MainActivity.this,"URL invalido", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+        link_music = new ArrayList<String>();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String video = link_music.get(position);
+
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(video)));
+
+
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this,"URL invalido", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner_search);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -206,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 // pesquisa pelo artista
                 for (String c : musics) {
                     String[] split = c.split("\\|");
-                    String artist = split[1];
+                    String artist = split[0];
                     artist = artist.trim();
 
                     if (artist.contains(termo)) {
@@ -217,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 // pesquisa pelo album
                 for (String c : musics) {
                     String[] split = c.split("\\|");
-                    String album = split[0];
+                    String album = split[1];
                     album = album.trim();
 
                     if (album.contains(termo)) {
@@ -356,7 +354,7 @@ public class MainActivity extends AppCompatActivity {
                 EditText etEditor = (EditText) al.findViewById(R.id.editText_editor);
                 EditText etYear = (EditText) al.findViewById(R.id.editText_year);
                 RatingBar star = (RatingBar) al.findViewById(R.id.ratingBar);
-//                EditText etLink = (EditText) al.findViewById(R.id.editText_link);
+                EditText etLink = (EditText) al.findViewById(R.id.editText_link);
 
                 mediaPlayer = MediaPlayer.create(MainActivity.this,R.raw.teclado);
                 mediaPlayer.setLooping(true);
@@ -371,17 +369,16 @@ public class MainActivity extends AppCompatActivity {
                 String editor = etEditor.getText().toString();
                 String year = etYear.getText().toString();
                 int rating = (int)star.getRating();
-//                String video = etLink.getText().toString();
+                String video = etLink.getText().toString();
 
                 // Criar um novo album.
-                String newMusic = music + "|" + "• By: " + artist + "|" +
-                        editor+ "|" + "•" +year+ "|" + "•" +rating+ " stars";
+                String newMusic = artist + "|" + " • " + music + "|" +editor+ "|" + " • " +year+ "|" + " • " +rating+ " stars";
 
                 // adicionar o novo album.
                 // anti-bugs
-                if (!artist.isEmpty() && !music.isEmpty() && !editor.isEmpty() && !year.isEmpty()) {
+                if (!artist.isEmpty() && !music.isEmpty() && !editor.isEmpty() && !year.isEmpty() && !video.isEmpty()) {
                     musics.add(newMusic);
-//                    link_music.add(video);
+                    link_music.add(video);
 
                     Toast.makeText(MainActivity.this, R.string.Toast_Created, Toast.LENGTH_SHORT).show();
                     //}else if (!artist.isEmpty() || !music.isEmpty() || !editor.isEmpty() || !year.isEmpty()) {
