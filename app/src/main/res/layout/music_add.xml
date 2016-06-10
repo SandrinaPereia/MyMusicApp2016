@@ -33,6 +33,13 @@
         android:hint="@string/Text_Year"
         android:inputType="phone" />
 
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/editText_link"
+        android:hint="Link do youtube" />
+
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,4 +47,5 @@
         android:numStars="5"
         android:mirrorForRtl="true"
         android:layout_gravity="center_horizontal"/>
+
 </LinearLayout>

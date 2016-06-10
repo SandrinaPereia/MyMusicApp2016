@@ -2,8 +2,10 @@ package ipleiria.pt.mymusicapp2016;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<String> musics;
     private MediaPlayer mediaPlayer;
+//    private ArrayList<String> link_music;
     //atributo da classe.
     private AlertDialog alerta;
 
@@ -55,8 +58,9 @@ public class MainActivity extends AppCompatActivity {
 
                 musics.remove(position);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
-                        android.R.layout.simple_list_item_1, musics);
+                SimpleAdapter adapter = createSimpleAdapter(musics);
+                //ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, musics);
+
                 ListView listView = (ListView) findViewById(R.id.listView_musics);
                 listView.setAdapter(adapter);
 
@@ -104,13 +108,33 @@ public class MainActivity extends AppCompatActivity {
 //        musics.add("Rui Veloso - Ar de Rock \n• 1980 - 3 stars •");
 //        musics.add("Tiago Bettencourt - Do Princípio \n• Universal Music Argentina 2014 - 3 stars •");
 
+
+
         //Código da ListViews
         //Mudar o imagem da aplicação
-        //SimpleAdapter adapter = createSimpleAdapter(musics);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, musics);
+
+        SimpleAdapter adapter = createSimpleAdapter(musics);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, musics);
 
         ListView listView = (ListView) findViewById(R.id.listView_musics);
         listView.setAdapter(adapter);
+
+//        link_music = new ArrayList<String>();
+//
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String video = link_music.get(position);
+//
+//                try {
+//                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(video)));
+//
+//
+//                } catch (Exception e) {
+//                    Toast.makeText(MainActivity.this,"URL invalido", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner_search);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -165,7 +189,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (termo.equals("")) { // a editText está vazia?
             // mostro todos as informações.
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, musics);
+            SimpleAdapter adapter = createSimpleAdapter(musics);
+//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, musics);
             lv.setAdapter(adapter);
 
             Toast.makeText(MainActivity.this, R.string.Toast1, Toast.LENGTH_SHORT).show();
@@ -180,8 +205,8 @@ public class MainActivity extends AppCompatActivity {
             } else if (selectedItem.equals(getString(R.string.Artist_main))) {
                 // pesquisa pelo artista
                 for (String c : musics) {
-                    String[] split = c.split("\\•");
-                    String artist = split[0];
+                    String[] split = c.split("\\|");
+                    String artist = split[1];
                     artist = artist.trim();
 
                     if (artist.contains(termo)) {
@@ -191,8 +216,8 @@ public class MainActivity extends AppCompatActivity {
             } else if (selectedItem.equals(getString(R.string.Album_main))) {
                 // pesquisa pelo album
                 for (String c : musics) {
-                    String[] split = c.split("\\•");
-                    String album = split[1];
+                    String[] split = c.split("\\|");
+                    String album = split[0];
                     album = album.trim();
 
                     if (album.contains(termo)) {
@@ -202,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
             }else if (selectedItem.equals(getString(R.string.Editor_main))) {
                 // pesquisa pela idade
                 for (String c : musics) {
-                    String[] split = c.split("\\•");
+                    String[] split = c.split("\\|");
                     String year = split[2];
                     year = year.trim();
 
@@ -213,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
             }else if (selectedItem.equals(getString(R.string.Year_main))) {
                 // pesquisa pela idade
                 for (String c : musics) {
-                    String[] split = c.split("\\•");
+                    String[] split = c.split("\\|");
                     String year = split[3];
                     year = year.trim();
 
@@ -225,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
             }else if (selectedItem.equals(getString(R.string.Stars_main))) {
                 // pesquisa pelas estrelas
                 for (String c : musics) {
-                    String[] split = c.split("\\•");
+                    String[] split = c.split("\\|");
                     String stars = split[4];
                     stars = stars.trim();
 
@@ -239,15 +264,16 @@ public class MainActivity extends AppCompatActivity {
 
             if (!vazia) { // vazia == false || se a lista não estiver vazia
                 // mostrar o conteúdo da lista de albuns pesquisados na listViews
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                        android.R.layout.simple_list_item_1, searchMusics);
+                SimpleAdapter adapter = createSimpleAdapter(searchMusics);
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, searchMusics);
                 lv.setAdapter(adapter);
 
                 Toast.makeText(MainActivity.this, R.string.Toast2, Toast.LENGTH_SHORT).show();
             } else { // lista de resultados está vazia.
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                        android.R.layout.simple_list_item_1, musics);
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, musics);
+                SimpleAdapter adapter = createSimpleAdapter(musics);
+
                 lv.setAdapter(adapter);
 
                 Toast.makeText(MainActivity.this, R.string.Toast3, Toast.LENGTH_SHORT).show();
@@ -256,24 +282,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Mudar o imagem da aplicação
-//    private SimpleAdapter createSimpleAdapter(ArrayList<String> musics) {
-//        List<HashMap<String, String>> simpleAdapterData = new ArrayList<HashMap<String, String>>();
-//
-//        for (String c : musics) {
-//            HashMap<String, String> hashMap = new HashMap<>();
-//
-//            String[] split = c.split(" \\• ");
-//
-//            hashMap.put("artist", split[0]);
-//
-//            simpleAdapterData.add(hashMap);
-//        }
-//
-//        String[] from = {"artist"};
-//        int[] to = {R.id.textView_artist};
-//        SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), simpleAdapterData, R.layout.listview_item, from, to);
-//        return simpleAdapter;
-//    }
+    private SimpleAdapter createSimpleAdapter(ArrayList<String> musics) {
+        List<HashMap<String, String>> simpleAdapterData = new ArrayList<HashMap<String, String>>();
+
+        for (String c : musics) {
+            HashMap<String, String> hashMap = new HashMap<>();
+
+            String[] split = c.split("\\|");
+
+            hashMap.put("artist", split[0].trim());
+            hashMap.put("album", split[1].trim());
+            hashMap.put("editor", split[2].trim());
+            hashMap.put("year", split[3].trim());
+            hashMap.put("stars", split[4].trim());
+
+            simpleAdapterData.add(hashMap);
+        }
+
+        String[] from = {"artist", "album", "editor", "year", "stars"};
+        int[] to = {R.id.textView_artist, R.id.textView_album, R.id.textView_editor, R.id.textView_year, R.id.textView_ratingBar};
+        SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), simpleAdapterData, R.layout.listview_item, from, to);
+        return simpleAdapter;
+    }
     @Override
     protected void onStop() {
         super.onStop();
@@ -326,6 +356,7 @@ public class MainActivity extends AppCompatActivity {
                 EditText etEditor = (EditText) al.findViewById(R.id.editText_editor);
                 EditText etYear = (EditText) al.findViewById(R.id.editText_year);
                 RatingBar star = (RatingBar) al.findViewById(R.id.ratingBar);
+//                EditText etLink = (EditText) al.findViewById(R.id.editText_link);
 
                 mediaPlayer = MediaPlayer.create(MainActivity.this,R.raw.teclado);
                 mediaPlayer.setLooping(true);
@@ -340,14 +371,18 @@ public class MainActivity extends AppCompatActivity {
                 String editor = etEditor.getText().toString();
                 String year = etYear.getText().toString();
                 int rating = (int)star.getRating();
+//                String video = etLink.getText().toString();
 
                 // Criar um novo album.
-                String newMusic = artist + " • " + music + "\n• " + editor + " • " + year + " • " + rating + " stars" + " •\n";
+                String newMusic = music + "|" + "• By: " + artist + "|" +
+                        editor+ "|" + "•" +year+ "|" + "•" +rating+ " stars";
 
                 // adicionar o novo album.
                 // anti-bugs
                 if (!artist.isEmpty() && !music.isEmpty() && !editor.isEmpty() && !year.isEmpty()) {
                     musics.add(newMusic);
+//                    link_music.add(video);
+
                     Toast.makeText(MainActivity.this, R.string.Toast_Created, Toast.LENGTH_SHORT).show();
                     //}else if (!artist.isEmpty() || !music.isEmpty() || !editor.isEmpty() || !year.isEmpty()) {
                     //  musics.add(newMusic);
@@ -356,11 +391,12 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, R.string.Toast_No_Created, Toast.LENGTH_SHORT).show();
                 }
 
+
                 // dizer à listView para se actualizar
                 ListView lv = (ListView) findViewById(R.id.listView_musics);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
-                        android.R.layout.simple_list_item_1, musics);
+                SimpleAdapter adapter = createSimpleAdapter(musics);
+            //ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, musics);
 
                 lv.setAdapter(adapter);
 
