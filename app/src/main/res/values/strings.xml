@@ -17,12 +17,10 @@
     <string name="Text_Album">Album</string>
     <string name="Text_Editor">Editor</string>
     <string name="Text_Year">Year</string>
-    <string name="Deleted">Deleted</string>
     <string name="Delete_album">Delete Album</string>
     <string name="Aviso_Delete">Are you sure you want to delete this album?</string>
     <string name="Ok_Aviso_Delete">Ok</string>
     <string name="Toast_deleted">Deleted</string>
-    <string name="Cancel_Aviso_Delete">Cancel</string>
     <string name="Toast_Canceled">Canceled</string>
     <string name="Toast1">Showing all albuns.</string>
     <string name="All_main">All</string>
@@ -33,6 +31,15 @@
     <string name="Stars_main">Stars</string>
     <string name="Toast2">Results found.</string>
     <string name="Toast3">No results found.</string>
+    <string name="Ok_button">Ok</string>
+    <string name="Toast_Created">Added</string>
+    <string name="Toast_No_Created">Empty fields</string>
+    <string name="Button_Cancel">Cancel</string>
+    <string name="Toast_Cancel">Canceled</string>
+    <string name="Add_Album_title">Add Album</string>
+    <string name="Link">Link YouTube</string>
+    <string name="URL_Invalid">URL invalid</string>
+    <string name="Cancel">Cancel</string>
     <string-array name="spinner_options">
         <item>@string/All</item>
         <item>@string/Artist</item>
@@ -41,11 +48,4 @@
         <item>@string/Year</item>
         <item>@string/Stars</item>
     </string-array>
-    <string name="Ok_button">Ok</string>
-    <string name="Toast_Created">Added</string>
-    <string name="Toast_No_Created">Empty fields</string>
-    <string name="Button_Cancel">Cancel</string>
-    <string name="Toast_Cancel">Canceled</string>
-    <string name="Add_Album_title">Add Album</string>
-    <string name="Cancel"></string>
 </resources>

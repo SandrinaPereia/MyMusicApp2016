@@ -18,7 +18,6 @@
     <string name="Text_Artist">Artist</string>
     <string name="Text_Editor">Editor</string>
     <string name="Text_Year">Year</string>
-    <string name="Deleted">Deleted</string>
     <string name="Toast1">Showing all musics</string>
     <string name="Toast2">Results found</string>
     <string name="Toast3">No results found</string>
@@ -28,9 +27,8 @@
     <string name="Ok_Aviso_Delete">Ok</string>
     <string name="Editor_main">Editor</string>
     <string name="Toast_Canceled">Canceled</string>
-    <string name="Cancel"></string>
+    <string name="Cancel">Cancel</string>
     <string name="Toast_deleted">Deleted</string>
-    <string name="Cancel_Aviso_Delete">Cancel</string>
     <string name="Album_main">Album</string>
     <string name="All_main">All</string>
     <string name="Artist_main">Artist</string>
@@ -41,4 +39,6 @@
     <string name="Toast_Cancel">Canceled</string>
     <string name="Toast_Created">Added</string>
     <string name="Toast_No_Created">Empty fields</string>
+    <string name="Link">Link YouTube</string>
+    <string name="URL_Invalid">URL invalid</string>
 </resources>

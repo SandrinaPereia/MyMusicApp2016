@@ -18,7 +18,6 @@
     <string name="Text_Artist">Artista</string>
     <string name="Text_Editor">Editora</string>
     <string name="Text_Year">Ano</string>
-    <string name="Deleted">Eliminado</string>
     <string name="Toast1">Mostrando todas as músicas</string>
     <string name="Toast2">Resultados encontrados</string>
     <string name="Toast3">Sem resultados encontrados</string>
@@ -28,8 +27,7 @@
     <string name="Ok_Aviso_Delete">Ok</string>
     <string name="Editor_main">Editora</string>
     <string name="Toast_Canceled">Cancelado</string>
-    <string name="Toast_deleted">Apagado</string>
-    <string name="Cancel_Aviso_Delete">Cancelar</string>
+    <string name="Toast_deleted">Eliminado</string>
     <string name="Album_main">Álbum</string>
     <string name="All_main">Tudo</string>
     <string name="Artist_main">Artista</string>
@@ -40,4 +38,7 @@
     <string name="Toast_Cancel">Cancelado</string>
     <string name="Toast_Created">Adicionado</string>
     <string name="Toast_No_Created">Campos vazios</string>
+    <string name="Link">Link do YouTube</string>
+    <string name="URL_Invalid">URL inválido</string>
+    <string name="Cancel">Cancelar</string>
 </resources>

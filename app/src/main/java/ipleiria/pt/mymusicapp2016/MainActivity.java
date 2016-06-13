@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.provider.MediaStore;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,12 +18,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> link_music;
     //atributo da classe.
     private AlertDialog alerta;
+    private static final int SELECTED_PICTURE = 20;
+    private ImageView imgPicture;
+
 
     private void exemplo_simples(final int position) {
         //Cria o gerador do AlertDialog
@@ -48,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
 
         builder.setPositiveButton(R.string.Ok_Aviso_Delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                mediaPlayer = MediaPlayer.create(MainActivity.this,R.raw.teclado);
+                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.teclado);
                 mediaPlayer.setLooping(true);
                 mediaPlayer.start();
-                if(mediaPlayer.isPlaying()){
+                if (mediaPlayer.isPlaying()) {
                     mediaPlayer.setLooping(false);
                 }
                 Toast.makeText(MainActivity.this, R.string.Toast_deleted, Toast.LENGTH_SHORT).show();
@@ -69,12 +78,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //define um botão como negativo.
-        builder.setNegativeButton(R.string.Cancel_Aviso_Delete, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                mediaPlayer = MediaPlayer.create(MainActivity.this,R.raw.teclado);
+                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.teclado);
                 mediaPlayer.setLooping(true);
                 mediaPlayer.start();
-                if(mediaPlayer.isPlaying()){
+                if (mediaPlayer.isPlaying()) {
                     mediaPlayer.setLooping(false);
                 }
 
@@ -93,13 +102,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        imgPicture = (ImageView) findViewById(R.id.imgPicture);
+
         SharedPreferences sp = getSharedPreferences("appMusics", 0);
         Set<String> musicsSet = sp.getStringSet("musicsKey", new HashSet<String>());
+        Set<String> youtubeSet = sp.getStringSet("youtubeKey", new HashSet<String>());
 
         musics = new ArrayList<String>(musicsSet);
         Collections.sort(musics);
 
-//        musics.add("Ana Moura - Moura \n• 2015 - 4 stars •");
+//        musics.add("Paulo Sousa| • Todos Os Dias| • Farol Múica, Lda.| • 2016| • 4 stars");
 //        musics.add("António Variações - Anjo da Guarda \n• 1988 - 5 stars •");
 //        musics.add("Deolinda - Mundo Pequenino \n• 2013 - 3 stars •");
 //        musics.add("FF - Estou Aqui \n• 2006 - 4 stars •");
@@ -112,12 +124,16 @@ public class MainActivity extends AppCompatActivity {
         //Mudar o imagem da aplicação
 
         SimpleAdapter adapter = createSimpleAdapter(musics);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, musics);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, musics);
 
         ListView listView = (ListView) findViewById(R.id.listView_musics);
         listView.setAdapter(adapter);
 
-        link_music = new ArrayList<String>();
+        link_music = new ArrayList<String>(youtubeSet);
+
+//        link_music.add("https://www.youtube.com/watch?v=wJAHg-vSeaw");
+
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -129,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 } catch (Exception e) {
-                    Toast.makeText(MainActivity.this,"URL invalido", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.URL_Invalid, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -146,10 +162,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 exemplo_simples(position);
-                mediaPlayer = MediaPlayer.create(MainActivity.this,R.raw.teclado);
+                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.teclado);
                 mediaPlayer.setLooping(true);
                 mediaPlayer.start();
-                if(mediaPlayer.isPlaying()){
+                if (mediaPlayer.isPlaying()) {
                     mediaPlayer.setLooping(false);
                 }
                 // código que é executado quando se clica num item da lista.
@@ -159,9 +175,43 @@ public class MainActivity extends AppCompatActivity {
                 //atualizar a lista sem o contacto
             }
         });
+    }
 
-        //Apagar contactos
+    public void onImageGalleryClicked(View v){
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 
+        File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_ALARMS);
+        String pictureDirectoryPath = pictureDirectory.getPath();
+
+        Uri data = Uri.parse(pictureDirectoryPath);
+
+        photoPickerIntent.setDataAndType(data, "image/*");
+
+        startActivityForResult(photoPickerIntent, SELECTED_PICTURE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if(requestCode == SELECTED_PICTURE){
+
+                Uri imageUri = data.getData();
+
+                InputStream inputStream;
+
+                try{
+                    inputStream = getContentResolver().openInputStream(imageUri);
+
+                    Bitmap image = BitmapFactory.decodeStream(inputStream);
+
+                    imgPicture.setImageBitmap(image);
+                } catch (FileNotFoundException e){
+                    e.printStackTrace();
+
+                    Toast.makeText(this, "Unable to open image", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 
     public void onClick_search(View view) {
@@ -315,10 +365,12 @@ public class MainActivity extends AppCompatActivity {
         // Guardar as coisas em memória
 
         // Mete os contactos num conjunto porque ele é uma lista e isso daria problemas ao putStringSet
-        HashSet musicsSets = new HashSet(musics);
+        HashSet musicsSet = new HashSet(musics);
+        HashSet youtubeSet = new HashSet(link_music);
 
         //Colocar o conjunto e criar uma chave que nos lembremos
-        edit.putStringSet("musicsKey", musicsSets);
+        edit.putStringSet("musicsKey", musicsSet);
+        edit.putStringSet("youtubeKey", youtubeSet);
 
         // Para armazenar lá as coisas
         edit.commit();
@@ -356,6 +408,7 @@ public class MainActivity extends AppCompatActivity {
                 RatingBar star = (RatingBar) al.findViewById(R.id.ratingBar);
                 EditText etLink = (EditText) al.findViewById(R.id.editText_link);
 
+
                 mediaPlayer = MediaPlayer.create(MainActivity.this,R.raw.teclado);
                 mediaPlayer.setLooping(true);
                 mediaPlayer.start();
@@ -370,6 +423,7 @@ public class MainActivity extends AppCompatActivity {
                 String year = etYear.getText().toString();
                 int rating = (int)star.getRating();
                 String video = etLink.getText().toString();
+
 
                 // Criar um novo album.
                 String newMusic = artist + "|" + " • " + music + "|" +editor+ "|" + " • " +year+ "|" + " • " +rating+ " stars";
@@ -420,6 +474,8 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
