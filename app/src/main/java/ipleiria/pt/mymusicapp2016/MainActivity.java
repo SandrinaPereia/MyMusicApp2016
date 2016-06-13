@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 //        musics.add("Jorge Palma - Voo Nocturno \n• 1980 - 4 stars •");
 //        musics.add("Pedro Abrunhosa - Luz \n• 2007 - 5 stars •");
 //        musics.add("Rui Veloso - Ar de Rock \n• 1980 - 3 stars •");
-//        musics.add("Tiago Bettencourt - Do Princípio \n• Universal Music Argentina 2014 - 3 stars •");nr
+//        musics.add("Tiago Bettencourt - Do Princípio \n• Universal Music Argentina 2014 - 3 stars •");
 
         //Código da ListViews
         //Mudar o imagem da aplicação
