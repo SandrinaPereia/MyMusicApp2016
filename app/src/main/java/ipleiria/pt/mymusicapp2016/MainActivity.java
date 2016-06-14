@@ -40,20 +40,16 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> musics;
     private MediaPlayer mediaPlayer;
     private ArrayList<String> link_music;
-    //atributo da classe.
     private AlertDialog alerta;
     private static final int SELECTED_PICTURE = 20;
     private ImageView imgPicture;
 
 
     private void exemplo_simples(final int position) {
-        //Cria o gerador do AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        //define o titulo
+
         builder.setTitle(R.string.Delete_album);
-        //define a mensagem
         builder.setMessage(R.string.Aviso_Delete);
-        //define um botão como positivo
 
         builder.setPositiveButton(R.string.Ok_Aviso_Delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
@@ -68,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 musics.remove(position);
 
                 SimpleAdapter adapter = createSimpleAdapter(musics);
-                //ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, musics);
 
                 ListView listView = (ListView) findViewById(R.id.listView_musics);
                 listView.setAdapter(adapter);
@@ -77,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        //define um botão como negativo.
         builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
                 mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.teclado);
@@ -90,9 +84,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, R.string.Toast_Canceled, Toast.LENGTH_SHORT).show();
             }
         });
-        //cria o AlertDialog
+
         alerta = builder.create();
-        //Exibe
         alerta.show();
     }
 
@@ -111,29 +104,11 @@ public class MainActivity extends AppCompatActivity {
         musics = new ArrayList<String>(musicsSet);
         Collections.sort(musics);
 
-//        musics.add("Paulo Sousa| • Todos Os Dias| • Farol Múica, Lda.| • 2016| • 4 stars");
-//        musics.add("António Variações - Anjo da Guarda \n• 1988 - 5 stars •");
-//        musics.add("Deolinda - Mundo Pequenino \n• 2013 - 3 stars •");
-//        musics.add("FF - Estou Aqui \n• 2006 - 4 stars •");
-//        musics.add("Jorge Palma - Voo Nocturno \n• 1980 - 4 stars •");
-//        musics.add("Pedro Abrunhosa - Luz \n• 2007 - 5 stars •");
-//        musics.add("Rui Veloso - Ar de Rock \n• 1980 - 3 stars •");
-//        musics.add("Tiago Bettencourt - Do Princípio \n• Universal Music Argentina 2014 - 3 stars •");
-
-        //Código da ListViews
-        //Mudar o imagem da aplicação
-
         SimpleAdapter adapter = createSimpleAdapter(musics);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, musics);
-
         ListView listView = (ListView) findViewById(R.id.listView_musics);
         listView.setAdapter(adapter);
 
         link_music = new ArrayList<String>(youtubeSet);
-
-//        link_music.add("https://www.youtube.com/watch?v=wJAHg-vSeaw");
-
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -168,11 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.setLooping(false);
                 }
-                // código que é executado quando se clica num item da lista.
-                // não é preciso saber ao promenor aquilo que este código faz, até pq é complexo.
-
                 return true;
-                //atualizar a lista sem o contacto
             }
         });
     }
@@ -215,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick_search(View view) {
-        // ir buscar as referências para a editText, o spinner e a ListView.
         EditText et = (EditText) findViewById(R.id.editText_search);
         Spinner sp = (Spinner) findViewById(R.id.spinner_search);
         ListView lv = (ListView) findViewById(R.id.listView_musics);
@@ -227,31 +197,25 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.setLooping(false);
         }
 
-        // criar uma nova lista, que guarde os albuns pesquisados.
         ArrayList<String> searchMusics = new ArrayList<>();
 
-        // percorrer todas as informações e adicionar os que contêm o termo a pesquisar à nova lista
         String termo = et.getText().toString();
-
         String selectedItem = (String) sp.getSelectedItem();
 
-        if (termo.equals("")) { // a editText está vazia?
-            // mostro todos as informações.
+        if (termo.equals("")) {
+
             SimpleAdapter adapter = createSimpleAdapter(musics);
-//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, musics);
             lv.setAdapter(adapter);
 
             Toast.makeText(MainActivity.this, R.string.Toast1, Toast.LENGTH_SHORT).show();
-        } else { // a editText não está vazia
-
+        } else {
             if (selectedItem.equals(getString(R.string.All_main))) {
-                for (String c : musics) { // para cada c em musics
-                    if (c.contains(termo)) { // se o c contiver o termo
-                        searchMusics.add(c); //adicionar o c à lista searchContacts.
+                for (String c : musics) {
+                    if (c.contains(termo)) {
+                        searchMusics.add(c);
                     }
                 }
             } else if (selectedItem.equals(getString(R.string.Artist_main))) {
-                // pesquisa pelo artista
                 for (String c : musics) {
                     String[] split = c.split("\\|");
                     String artist = split[0];
@@ -262,7 +226,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             } else if (selectedItem.equals(getString(R.string.Album_main))) {
-                // pesquisa pelo album
                 for (String c : musics) {
                     String[] split = c.split("\\|");
                     String album = split[1];
@@ -273,7 +236,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }else if (selectedItem.equals(getString(R.string.Editor_main))) {
-                // pesquisa pela idade
                 for (String c : musics) {
                     String[] split = c.split("\\|");
                     String year = split[2];
@@ -284,7 +246,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }else if (selectedItem.equals(getString(R.string.Year_main))) {
-                // pesquisa pela idade
                 for (String c : musics) {
                     String[] split = c.split("\\|");
                     String year = split[3];
@@ -296,7 +257,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }else if (selectedItem.equals(getString(R.string.Stars_main))) {
-                // pesquisa pelas estrelas
                 for (String c : musics) {
                     String[] split = c.split("\\|");
                     String stars = split[4];
@@ -310,18 +270,15 @@ public class MainActivity extends AppCompatActivity {
 
             boolean vazia = searchMusics.isEmpty();
 
-            if (!vazia) { // vazia == false || se a lista não estiver vazia
-                // mostrar o conteúdo da lista de albuns pesquisados na listViews
+            if (!vazia) {
+
                 SimpleAdapter adapter = createSimpleAdapter(searchMusics);
-//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, searchMusics);
                 lv.setAdapter(adapter);
 
                 Toast.makeText(MainActivity.this, R.string.Toast2, Toast.LENGTH_SHORT).show();
-            } else { // lista de resultados está vazia.
+            } else {
 
-//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, musics);
                 SimpleAdapter adapter = createSimpleAdapter(musics);
-
                 lv.setAdapter(adapter);
 
                 Toast.makeText(MainActivity.this, R.string.Toast3, Toast.LENGTH_SHORT).show();
@@ -329,7 +286,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //Mudar o imagem da aplicação
     private SimpleAdapter createSimpleAdapter(ArrayList<String> musics) {
         List<HashMap<String, String>> simpleAdapterData = new ArrayList<HashMap<String, String>>();
 
@@ -356,23 +312,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        //Toast.makeText(MainActivity.this, "A guardar contactos.", Toast.LENGTH_SHORT).show();
-
-        // o 0 é para ficar em privado
         SharedPreferences sp = getSharedPreferences("appMusics", 0);
         SharedPreferences.Editor edit = sp.edit();
 
-        // Guardar as coisas em memória
-
-        // Mete os contactos num conjunto porque ele é uma lista e isso daria problemas ao putStringSet
         HashSet musicsSet = new HashSet(musics);
         HashSet youtubeSet = new HashSet(link_music);
 
-        //Colocar o conjunto e criar uma chave que nos lembremos
         edit.putStringSet("musicsKey", musicsSet);
         edit.putStringSet("youtubeKey", youtubeSet);
 
-        // Para armazenar lá as coisas
         edit.commit();
     }
 
@@ -392,13 +340,9 @@ public class MainActivity extends AppCompatActivity {
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(inflater.inflate(R.layout.music_add, null));
         // Add the buttons
-        // Adicionar dois botões, um positivo e outro negativo
         builder.setPositiveButton(R.string.Ok_button, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User clicked OK button
-                // Obter referência para as editTexts
-                // Fazer o cast de um diálogo "genérico"
-                // Para um alertdialog
+
                 AlertDialog al = (AlertDialog) dialog;
 
                 EditText etArtist = (EditText) al.findViewById(R.id.editText_artist);
@@ -416,7 +360,6 @@ public class MainActivity extends AppCompatActivity {
                     mediaPlayer.setLooping(false);
                 }
 
-                // Obter as informações das editTexts
                 String artist = etArtist.getText().toString();
                 String music = etAlbum.getText().toString();
                 String editor = etEditor.getText().toString();
@@ -424,34 +367,21 @@ public class MainActivity extends AppCompatActivity {
                 int rating = (int)star.getRating();
                 String video = etLink.getText().toString();
 
-
-                // Criar um novo album.
                 String newMusic = artist + "|" + " • " + music + "|" +editor+ "|" + " • " +year+ "|" + " • " +rating+ " stars";
 
-                // adicionar o novo album.
-                // anti-bugs
                 if (!artist.isEmpty() && !music.isEmpty() && !editor.isEmpty() && !year.isEmpty() && !video.isEmpty()) {
                     musics.add(newMusic);
                     link_music.add(video);
 
                     Toast.makeText(MainActivity.this, R.string.Toast_Created, Toast.LENGTH_SHORT).show();
-                    //}else if (!artist.isEmpty() || !music.isEmpty() || !editor.isEmpty() || !year.isEmpty()) {
-                    //  musics.add(newMusic);
-                    //Toast.makeText(MainActivity.this, "Created", Toast.LENGTH_SHORT).show();
+
                 } else {
                     Toast.makeText(MainActivity.this, R.string.Toast_No_Created, Toast.LENGTH_SHORT).show();
                 }
 
-
-                // dizer à listView para se actualizar
                 ListView lv = (ListView) findViewById(R.id.listView_musics);
-
                 SimpleAdapter adapter = createSimpleAdapter(musics);
-                //ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, musics);
-
                 lv.setAdapter(adapter);
-
-                //Toast.makeText(MainActivity.this, "Confirmed", Toast.LENGTH_SHORT).show();
             }
         });
         builder.setNegativeButton(R.string.Button_Cancel, new DialogInterface.OnClickListener() {

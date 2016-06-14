@@ -7,7 +7,6 @@ android:layout_height="match_parent"
 android:orientation="vertical">
 
 
-
 <LinearLayout
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -52,7 +51,6 @@ android:orientation="vertical">
         android:id="@+id/button_add"
         android:onClick="onClick_add"
         android:layout_gravity="left" />
-
 </LinearLayout>
 
 

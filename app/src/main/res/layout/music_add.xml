@@ -48,5 +48,4 @@
         android:numStars="5"
         android:mirrorForRtl="true"
         android:layout_gravity="center_horizontal"/>
-
 </LinearLayout>
