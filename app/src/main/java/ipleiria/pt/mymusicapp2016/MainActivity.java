@@ -4,13 +4,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -38,21 +35,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
-
-
-
-
 public class MainActivity extends AppCompatActivity {
-
-
 
     private ArrayList<String> musics;
     private MediaPlayer mediaPlayer;
     private ArrayList<String> link_music;
     //atributo da classe.
     private AlertDialog alerta;
-    private static int RESULT_LOAD_IMAGE = 1;
+    private static final int SELECTED_PICTURE = 20;
+    private ImageView imgPicture;
 
 
     private void exemplo_simples(final int position) {
@@ -111,18 +102,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.listview_item);
-        Button buttonLoadImage = (Button) findViewById(R.id.buttonLoadPicture);
-        buttonLoadImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent i = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
-            }
-        });
+        imgPicture = (ImageView) findViewById(R.id.imgPicture);
 
         SharedPreferences sp = getSharedPreferences("appMusics", 0);
         Set<String> musicsSet = sp.getStringSet("musicsKey", new HashSet<String>());
@@ -197,22 +177,40 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void onImageGalleryClicked(View v){
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 
+        File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_ALARMS);
+        String pictureDirectoryPath = pictureDirectory.getPath();
+
+        Uri data = Uri.parse(pictureDirectoryPath);
+
+        photoPickerIntent.setDataAndType(data, "image/*");
+
+        startActivityForResult(photoPickerIntent, SELECTED_PICTURE);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-            ImageView imageView = (ImageView) findViewById(R.id.imgView);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+        if (resultCode == RESULT_OK) {
+            if(requestCode == SELECTED_PICTURE){
+
+                Uri imageUri = data.getData();
+
+                InputStream inputStream;
+
+                try{
+                    inputStream = getContentResolver().openInputStream(imageUri);
+
+                    Bitmap image = BitmapFactory.decodeStream(inputStream);
+
+                    imgPicture.setImageBitmap(image);
+                } catch (FileNotFoundException e){
+                    e.printStackTrace();
+
+                    Toast.makeText(this, "Unable to open image", Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
 
@@ -449,7 +447,7 @@ public class MainActivity extends AppCompatActivity {
                 ListView lv = (ListView) findViewById(R.id.listView_musics);
 
                 SimpleAdapter adapter = createSimpleAdapter(musics);
-            //ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, musics);
+                //ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, musics);
 
                 lv.setAdapter(adapter);
 

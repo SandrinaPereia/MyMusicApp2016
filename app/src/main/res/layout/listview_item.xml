@@ -3,25 +3,17 @@
     android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-
-    <ImageView
-        android:id="@+id/imgView"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_weight="1"
-        android:nestedScrollingEnabled="false"></ImageView>
-    <Button
-        android:id="@+id/buttonLoadPicture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="Load Picture"
-        android:layout_gravity="center"></Button>
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/imgPicture"
+            android:onClick="onImageGalleryClicked"
+            android:src="@mipmap/ic_pessoa"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,6 +37,11 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@mipmap/ic_disco"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,4 +70,3 @@
     </LinearLayout>
 
 </LinearLayout>
-
